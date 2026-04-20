@@ -729,7 +729,7 @@ function debounce(func, wait) {
         let full = currentItemsMap.get(id);
         if (!full || !full.modifier_groups || !full.modifier_groups.length) {
             body.innerHTML = '<div class="no-modifiers">No modifiers available for this item.</div>';
-            modal.classList.add('active');
+            if (modal) modal.classList.add('active');
             return;
         }
         let html = '';
@@ -744,7 +744,7 @@ function debounce(func, wait) {
             html += `</div></div>`;
         });
         body.innerHTML = html;
-        modal.classList.add('active');
+        if (modal) modal.classList.add('active');
     };
     window.closeModifierModal = function () { document.getElementById('modifierModal').classList.remove('active'); };
 
@@ -914,11 +914,15 @@ function debounce(func, wait) {
         const s = ${settingsJson};
         const url = "${escapedUrl}";
         const container = document.getElementById('spoton-menu-embed');
+        container.innerHTML = '<div style="padding:20px;text-align:center;">Loading menu...</div>';
         const modal = document.getElementById('spoton-modifier-modal');
         const modalTitle = document.getElementById('spoton-modal-item-name');
         const modalBody = document.getElementById('spoton-modal-body');
-        const modalClose = modal.querySelector('.spoton-modal-close');
-        if (!container) return;
+        const modalClose = modal ? modal.querySelector('.spoton-modal-close') : null;
+        if (!container) {
+        console.warn("SpotOn Menu: container not found");
+        return;
+        }
     
         // --- PARSER ---
         function parseSpotOnJSON(jsonObj) {
@@ -959,7 +963,7 @@ function debounce(func, wait) {
             const fullItem = itemsMap.get(itemId);
             if (!fullItem || !fullItem.modifier_groups || !fullItem.modifier_groups.length) {
                 modalBody.innerHTML = '<div class="spoton-no-modifiers">No modifiers available for this item.</div>';
-                modal.classList.add('active');
+                if (modal) modal.classList.add('active');
                 return;
             }
             modalTitle.textContent = itemName;
@@ -981,40 +985,10 @@ function debounce(func, wait) {
                 html += \`</div></div>\`;
             });
             modalBody.innerHTML = html;
-            modal.classList.add('active');
+            if (modal) modal.classList.add('active');
         }
     
         function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, m => m==='&'?'&amp;':m==='<'?'&lt;':'&gt;'); }
-    
-        fetch(url)
-            .then(res => res.json())
-            .then(raw => {
-                const parsed = parseSpotOnJSON(raw);
-                menuData = parsed;
-                itemsMap = parsed.itemsFull;
-                const activeCats = menuData.categories.filter(cat => !s.excluded.includes(cat.name));
-                if (!activeCats.length) {
-                    container.innerHTML = '<div style="padding:20px;text-align:center;">No categories available</div>';
-                    return;
-                }
-    
-                const style = document.createElement('style');
-                function loadGoogleFont(family) {
-                    if (!family || family === 'Inter') return;
-                    const link = document.createElement('link');
-                    link.href = `https://fonts.googleapis.com/css2?family=${family.replace(/ /g, '+')}:wght@400;500;600;700&display=swap`;
-                    link.rel = 'stylesheet';
-                    document.head.appendChild(link);
-                }
-                // Load all fonts from settings
-                loadGoogleFont(s.tabFontFamily);
-                loadGoogleFont(s.titleFontFamily);
-                loadGoogleFont(s.descFontFamily);
-                style.textContent = \`${generateStyleString(settings)}\`;
-                document.head.appendChild(style);
-                renderMenuHTML(menuData, s, container, activeCats);
-            })
-            .catch(err => { container.innerHTML = '<div style="padding:20px;text-align:center;">Failed to load menu: ' + err.message + '</div>'; });
     
         function renderMenuHTML(d, s, container, activeCats) {
             let html = \`<div class="spoton-embed"><div class="menu-layout tabs-\${s.tabsPos}">\`;
@@ -1035,8 +1009,8 @@ function debounce(func, wait) {
             html += \`<div class="menu-root layout-\${s.layout}" id="embedRoot"></div></div></div>\`;
             container.innerHTML = html;
     
-            const catsDiv = document.getElementById('embedCats');
-            const rootDiv = document.getElementById('embedRoot');
+            const catsDiv = container.querySelector('#embedCats');
+            const rootDiv = container.querySelector('#embedRoot');
     
             function renderCategories() {
                 catsDiv.innerHTML = '';
@@ -1061,7 +1035,7 @@ function debounce(func, wait) {
                     catsDiv.appendChild(link);
                 });
                 if (s.showSearch) {
-                    const search = document.getElementById('embedSearch');
+                    const search = container.querySelector('#embedSearch');
                     if (search) {
                         search.oninput = (e) => {
                             const term = e.target.value.toLowerCase();
@@ -1073,7 +1047,7 @@ function debounce(func, wait) {
                     }
                 }
                 if (s.showDropdown) {
-                    const select = document.getElementById('embedSelect');
+                    const select = container.querySelector('#embedSelect');
                     if (select) {
                         select.innerHTML = activeCats.map(c => \`<option value="\${c.id}">\${escapeHtml(c.name)}</option>\`).join('');
                         select.onchange = (e) => {
@@ -1134,8 +1108,8 @@ function debounce(func, wait) {
         }
     
         if (modalClose) {
-            modalClose.onclick = () => modal.classList.remove('active');
-            window.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('active'); });
+         modalClose.onclick = () => modal.classList.remove('active');
+        }
         }
     })();
     <\/script>`;

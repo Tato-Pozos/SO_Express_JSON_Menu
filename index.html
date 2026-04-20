@@ -1372,7 +1372,7 @@ ${listImageWrapperCSS}
                 if(showDropdown){
                     const select = toolbarDiv.querySelector('#catSelect');
                     if(select){
-                        select.innerHTML = active.map(cid => \`<option value="\${cid}">\${categoryNames[cid]}</option>\`).join('');
+                        select.innerHTML = active.map(cid => \`<option value="\${cid}">\${escapeHtml(categoryNames[cid])}</option>\`).join('');
                         select.addEventListener("change", e => {
                             const cid = e.target.value;
                             setActive(cid);
