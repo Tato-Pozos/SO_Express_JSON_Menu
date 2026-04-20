@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Embed Test</title>
+</head>
+<body>
+
+<h1>Menu Embed Test</h1>
+
+<div id="spoton-menu-root"></div>
+
+<script>
+window.SpotOnMenuConfig = {
+  "jsonUrl": "https://cdn.jsdelivr.net/gh/sarabus-coder/JSON-Menu-Files@main/BL-33F2-668A-345D-Default-Menu.json",
+  "layoutType": "hero-grid",
+  "tabsPosition": "top",
+  "tabAlign": "left",
+  "showImages": true,
+  "showPrices": true,
+  "showCategorySearch": true,
+  "showCategoryDropdown": false,
+  "excludedCategories": []
+};
+window.SpotOnMenuStyles = {
+  "cardBgColor": "#111315",
+  "cardTitleColor": "#f1f5f9",
+  "descTextColor": "#94a3b8",
+  "priceTextColor": "#38bdf8"
+};
+</script>
+
+<script src="https://express-json-menu.netlify.app/menu-embed.js"></script>
+
+</body>
+</html>
+
