@@ -68,6 +68,21 @@ This ensures consistent output between design-time configuration and live enviro
 
 ---
 
+## 📸 Preview
+
+![Menu Editor](./editor.jpg)
+![Embed Output](./embed.jpg)
+
+<p align="center">
+  <img src="./editor.jpg" alt="Menu Editor" width="900"/>
+</p>
+
+<p align="center">
+  <img src="./embed.jpg" alt="Embed Output" width="900"/>
+</p>
+
+---
+
 ## 👤 Author
 
 Leo Pozos  
