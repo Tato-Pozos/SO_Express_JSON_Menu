@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!--SpotOn Menu Editor Author: Leo Pozos - GitHub: https://github.com/Tato-Pozos Signature: SpotOn Menu Studio by Leo Pozos Version: 2.0.0-->
+<meta name="author" content="Leo Pozos">
+<meta name="creator" content="SpotOn Menu Studio by Leo Pozos">
+<meta name="source" content="https://github.com/Tato-Pozos">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>SpotOn Menu Studio</title>
+    <title>SpotOn Menu Editor</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         img.list-item-image {
@@ -70,6 +74,10 @@
         }
         .panel-section { width: 100%; padding: 20px 24px; border-bottom: 1px solid #2a2e35; }
         .panel-section:last-child { border-bottom: none; }
+        details.panel-section summary { cursor: pointer; list-style: none; }
+        details.panel-section summary::-webkit-details-marker { display: none; }
+        details.panel-section summary::before { content: "▶"; color: #cbd5e1; margin-right: 8px; transition: transform 0.2s; font-size: 12px; }
+        details.panel-section[open] summary::before { transform: rotate(90deg); }
         .section-title { font-size: 16px; font-weight: 600; margin-bottom: 16px; color: #f1f5f9; display: flex; align-items: center; gap: 8px; }
         .subsection-title { font-size: 14px; font-weight: 600; margin: 16px 0 12px 0; color: #cbd5e1; border-left: 3px solid #3b82f6; padding-left: 10px; }
         .control-group { margin-bottom: 16px; }
@@ -197,18 +205,39 @@
         }
         .modal-overlay.active { display: flex; }
         .modifier-modal-content {
-            max-width: 550px; width: 90%; max-height: 85vh; display: flex; flex-direction: column;
-            overflow: hidden; transition: all 0.2s ease;
+            max-width: 550px;
+            width: 90%;
+            max-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transition: all 0.2s ease;
+
+            background: #111315;
+            border: 1px solid #2a2e35;
+            border-radius: 24px;
+            color: #e2e8f0;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
         }
         .modifier-modal-header { padding: 20px 24px; display: flex; justify-content: space-between; align-items: center; }
         .modifier-modal-header h3 { font-size: 18px; margin: 0; }
-        .modal-close { background: none; border: none; font-size: 28px; cursor: pointer; transition: color 0.2s; }
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            transition: color 0.2s;
+            color: #cbd5e1;
+        }
+        .modal-close:hover {
+            color: #ffffff;
+        }
         .modifier-modal-body { padding: 20px 24px; overflow-y: auto; flex: 1; }
-        .modifier-group { margin-bottom: 20px; }
-        .modifier-group:last-child { margin-bottom: 0; }
-        .modifier-group-name { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+        .modifier-group { margin-bottom: 20px; padding-bottom: 14px; border-bottom: 1px solid #2a2e35; }
+        .modifier-group:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+        .modifier-group-name { font-size: 16px; font-weight: 600; margin-bottom: 10px; color: #e2e8f0; }
         .modifier-limits { font-size: 11px; margin-bottom: 10px; }
-        .modifier-option { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; font-size: 13px; border-bottom: 1px solid; }
+        .modifier-option { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; font-size: 14px; color: #cbd5e1; border-bottom: 1px solid #2a2e35; }
         .modifier-option:last-child { border-bottom: none; }
         .modifier-price { font-weight: 500; }
         .modifier-price.extra { font-weight: 600; }
@@ -295,8 +324,8 @@
 
 <div class="studio-container">
     <div class="controls-panel">
-        <div class="panel-section">
-            <div class="section-title">📂 Menu Source</div>
+        <details class="panel-section" open>
+            <summary class="section-title">📂 Menu Source</summary>
             <div class="control-group">
                 <label>Menu JSON URL</label>
                 <div style="display: flex; gap: 8px;">
@@ -309,10 +338,10 @@
                 <label>Excluded Categories</label>
                 <div id="excludeWidget" class="exclude-widget"></div>
             </div>
-        </div>
+        </details>
 
-        <div class="panel-section">
-            <div class="section-title">📐 Layout & Tabs</div>
+        <details class="panel-section" open>
+            <summary class="section-title">📐 Layout & Tabs</summary>
             <div class="control-group">
                 <label>Layout Style</label>
                 <select id="layoutType">
@@ -352,10 +381,10 @@
                 </div>
                 <div class="helper-text">When "Show Modifiers" is off, items will not open the modifier modal.</div>
             </div>
-        </div>
+        </details>
 
-        <div class="panel-section">
-            <div class="section-title">🎨 Tab Styling</div>
+        <details class="panel-section" open>
+            <summary class="section-title">🎨 Tab Styling</summary>
             <div class="control-group"><label>Default Tab</label><div class="color-input"><input type="color" id="defaultTabColor" value="#1a1d21"><span id="defaultTabColorValue">#1a1d21</span></div></div>
             <div class="control-group"><label>Default Text</label><div class="color-input"><input type="color" id="defaultTabTextColor" value="#cbd5e1"><span id="defaultTabTextColorValue">#cbd5e1</span></div></div>
             <div class="control-group"><label>Active Tab</label><div class="color-input"><input type="color" id="activeTabColor" value="#3b82f6"><span id="activeTabColorValue">#3b82f6</span></div></div>
@@ -363,10 +392,10 @@
             <div class="control-group"><label>Tab Border Color</label><div class="color-input"><input type="color" id="tabBorderColor" value="#2a2e35"><span id="tabBorderColorValue">#2a2e35</span></div></div>
             <div class="control-group"><label>Tab Border Width (px)</label><input type="number" id="tabBorderWidth" value="1" min="0" max="5" step="0.5"></div>
             <div class="control-group"><label>Tab Border Radius (px)</label><div class="radius-grid"><div><span>TL</span><input type="number" id="tabRadiusTL" value="40"></div><div><span>TR</span><input type="number" id="tabRadiusTR" value="40"></div><div><span>BR</span><input type="number" id="tabRadiusBR" value="40"></div><div><span>BL</span><input type="number" id="tabRadiusBL" value="40"></div></div></div>
-        </div>
+        </details>
   <!-- CARD STYLING -->
-       <div class="panel-section">
-  <div class="section-title">🃏 Card Styling</div>
+       <details class="panel-section" open>
+  <summary class="section-title">🃏 Card Styling</summary>
 
   <!-- Card Background -->
   <div class="control-group">
@@ -435,10 +464,10 @@
     </div>
   </div>
 
-</div>
+</details>
 
-        <div class="panel-section">
-            <div class="section-title">🔤 Typography (Cards & Tabs)</div>
+        <details class="panel-section" open>
+            <summary class="section-title">🔤 Typography (Cards & Tabs)</summary>
             <div class="control-group"><label>Tab Font</label><div class="typography-grid" style="display:grid; grid-template-columns:2fr 1fr 1fr; gap:10px;"><input type="text" id="tabFontFamily" list="fontList" value="Inter"><input type="number" id="tabFontSize" value="13"><select id="tabFontWeight"><option value="400">Normal</option><option value="500" selected>Medium</option><option value="600">Semi-bold</option><option value="700">Bold</option></select></div></div>
             <div class="control-group"><label>Card Title Font</label><div class="typography-grid" style="display:grid; grid-template-columns:2fr 1fr 1fr; gap:10px;"><input type="text" id="titleFontFamily" list="fontList" value="Inter"><input type="number" id="titleFontSize" value="17"><select id="titleFontWeight"><option value="400">Normal</option><option value="500">Medium</option><option value="600" selected>Semi-bold</option><option value="700">Bold</option></select></div></div>
             <div class="control-group"><label>Description Font</label><div class="typography-grid" style="display:grid; grid-template-columns:2fr 1fr 1fr; gap:10px;"><input type="text" id="descFontFamily" list="fontList" value="Inter"><input type="number" id="descFontSize" value="12"><select id="descFontWeight"><option value="400" selected>Normal</option><option value="500">Medium</option></select></div></div>
@@ -461,10 +490,10 @@
                 <option>Karla</option><option>Heebo</option><option>Comfortaa</option><option>Overpass</option><option>DM Sans</option><option>Figtree</option><option>Plus Jakarta Sans</option>
             </datalist>
             <div class="helper-text">Type any Google Font name – it will be loaded automatically.</div>
-        </div>
+        </details>
 
-        <div class="panel-section">
-            <div class="section-title">🔧 Modifiers Modal</div>
+        <details class="panel-section" open>
+            <summary class="section-title">🔧 Modifiers Modal</summary>
             <div class="control-group">
                 <label><input type="checkbox" id="inheritCardStyle" checked> Inherit card styling (background, radius, border, colors & typography)</label>
                 <div class="helper-text">When unchecked, you can customize modal separately below</div>
@@ -475,12 +504,12 @@
                 <div class="control-group"><label>Modal Text Color</label><div class="color-input"><input type="color" id="modalTextColor" value="#f1f5f9"><span id="modalTextColorValue">#f1f5f9</span></div></div>
                 <div class="control-group"><label>Accent Color (prices & limits)</label><div class="color-input"><input type="color" id="modalAccentColor" value="#3b82f6"><span id="modalAccentColorValue">#3b82f6</span></div></div>
                 <div class="control-group"><label>Modal Border Radius (px)</label><div class="radius-grid"><div><span>TL</span><input type="number" id="modalRadiusTL" value="24"></div><div><span>TR</span><input type="number" id="modalRadiusTR" value="24"></div><div><span>BR</span><input type="number" id="modalRadiusBR" value="24"></div><div><span>BL</span><input type="number" id="modalRadiusBL" value="24"></div></div></div>
-                <div class="control-group"><label>Separator Line Color</label><div class="color-input"><input type="color" id="modalLineColor" value="#2a2e35"><span id="modalLineColorValue">#2a2e35</span></div></div>
+                <div class="control-group"><label>Separator Line Color</label><div class="color-input"><input type="color" id="modalSeparatorColor" value="#2a2e35"><span id="modalSeparatorColorValue">#2a2e35</span></div></div>
                 <div class="subsection-title">Modal Typography</div>
                 <div class="control-group"><label>Modal Title Font</label><div class="typography-grid" style="display:grid; grid-template-columns:2fr 1fr 1fr; gap:10px;"><input type="text" id="modalTitleFont" list="fontList" value="Inter"><input type="number" id="modalTitleSize" value="18"><select id="modalTitleWeight"><option value="600" selected>Semi-bold</option><option value="400">Normal</option><option value="500">Medium</option><option value="700">Bold</option></select></div></div>
                 <div class="control-group"><label>Modifier Text Font</label><div class="typography-grid" style="display:grid; grid-template-columns:2fr 1fr 1fr; gap:10px;"><input type="text" id="modalModifierFont" list="fontList" value="Inter"><input type="number" id="modalModifierSize" value="13"><select id="modalModifierWeight"><option value="400" selected>Normal</option><option value="500">Medium</option></select></div></div>
             </div>
-        </div>
+        </details>
 
         <div class="action-buttons">
             <button class="btn btn-primary" id="showCodeBtn">📋 Generate Embed Code</button>
@@ -518,8 +547,10 @@
 <script>
 let currentMenuData = null;
 let excludedCategories = [];
+let excludeDropdownOpen = false;
 let currentItemsMap = new Map();
 let activeCategoryId = null;
+let currentModalItemId = null;
 let categorySearchQuery = "";
 
 /* ------------------ GOOGLE FONT LOADER ------------------ */
@@ -583,36 +614,184 @@ function parseSpotOnJSON(jsonObj) {
     return { categories: finalCats, itemsByCategory: finalItems, itemsFull };
 }
 
+/* ------------------ EXCLUDE CATEGORIES UI ------------------ */
+function renderExcludeWidget() {
+    // --- Preserve scroll position before re-render ---
+    const oldDropdown = document.getElementById("excludeDropdown");
+    const prevScrollTop = oldDropdown ? oldDropdown.scrollTop : 0;
+
+    const widget = document.getElementById("excludeWidget");
+    if (!widget || !currentMenuData) return;
+
+    const categories = currentMenuData.categories || [];
+
+    widget.innerHTML = `
+        <div class="exclude-trigger" onclick="toggleExcludeDropdown()">
+            <span>Exclude categories</span>
+            <span>▼</span>
+        </div>
+
+        <div class="exclude-chips">
+            ${excludedCategories.map(id => {
+                const cat = (currentMenuData?.categories || []).find(c => c.id === id);
+                const name = cat ? cat.name : id;
+                return `
+                    <div class="exclude-chip">
+                        ${name}
+                        <span class="exclude-chip-remove" onclick="removeExcludedCategory('${id}')">×</span>
+                    </div>
+                `;
+            }).join("")}
+        </div>
+
+        <div id="excludeDropdown" class="exclude-dropdown">
+            ${categories.map(c => `
+                <label class="exclude-option">
+                    <input type="checkbox"
+                        ${excludedCategories.includes(c.id) ? "checked" : ""}
+                        onchange="toggleCategoryExclude('${c.id}')">
+                    ${c.name}
+                </label>
+            `).join("")}
+        </div>
+    `;
+
+    // Preserve the dropdown open state after re-render
+    const dd = document.getElementById("excludeDropdown");
+    if (dd && excludeDropdownOpen) {
+        dd.classList.add("show");
+    }
+    // --- Restore scroll position after re-render ---
+    setTimeout(() => {
+        const ddRestore = document.getElementById("excludeDropdown");
+        if (ddRestore) {
+            ddRestore.scrollTop = prevScrollTop;
+        }
+    }, 0);
+}
+
+function toggleExcludeDropdown() {
+    const dd = document.getElementById("excludeDropdown");
+    if (!dd) return;
+
+    excludeDropdownOpen = !excludeDropdownOpen;
+
+    if (excludeDropdownOpen) {
+        dd.classList.add("show");
+    } else {
+        dd.classList.remove("show");
+    }
+}
+
+function toggleCategoryExclude(id) {
+    if (excludedCategories.includes(id)) {
+        excludedCategories = excludedCategories.filter(n => n !== id);
+    } else {
+        excludedCategories.push(id);
+    }
+    renderMenu();
+    renderExcludeWidget();
+}
+
+function removeExcludedCategory(id) {
+    excludedCategories = excludedCategories.filter(n => n !== id);
+    renderMenu();
+    renderExcludeWidget();
+}
+
 /* ------------------ LOAD ------------------ */
+window.__menuData = null;
+
 async function loadFromUrl(url) {
-    const res = await fetch(url);
-    const json = await res.json();
+    const loadBtn = document.getElementById("loadUrlBtn");
+    const originalText = loadBtn ? loadBtn.textContent : "Load";
+    
+    try {
+        if (loadBtn) {
+            loadBtn.textContent = "Loading...";
+            loadBtn.disabled = true;
+        }
+        
+        const res = await fetch(url);
+        
+        if (!res.ok) {
+            throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        
+        const json = await res.json();
+        
+        // Store raw data
+        currentMenuData = json;
+        window.__menuData = json;
+        
+        // Drive everything through state
+        setMenuState(json);
+        
+        // Show success feedback
+        if (loadBtn) {
+            loadBtn.textContent = "✓ Loaded";
+            loadBtn.style.background = "#22c55e";
+            setTimeout(() => {
+                loadBtn.textContent = originalText;
+                loadBtn.style.background = "";
+                loadBtn.disabled = false;
+            }, 2000);
+        }
+        
+        // Update excluded categories widget
+        renderExcludeWidget();
+        
+    } catch (error) {
+        console.error("Failed to load menu:", error);
+        
+        if (loadBtn) {
+            loadBtn.textContent = "✗ Failed";
+            loadBtn.style.background = "#ef4444";
+            loadBtn.disabled = false;
+            setTimeout(() => {
+                loadBtn.textContent = originalText;
+                loadBtn.style.background = "";
+            }, 3000);
+        }
+        
+        alert(`Failed to load menu: ${error.message}\n\nPlease check:\n• The URL is correct\n• The file is accessible (CORS enabled)\n• The JSON format is valid`);
+    }
+}
 
-    const parsed = parseSpotOnJSON(json);
-
+// fallback renderer for editor
+function renderMenuPreview() {
+    // Use the original logic to parse and render menu preview for the editor
+    const parsed = parseSpotOnJSON(currentMenuData);
     currentMenuData = parsed;
     currentItemsMap = parsed.itemsFull;
-
     activeCategoryId = parsed.categories[0]?.id;
-
     renderMenu();
 }
 
 /* ------------------ RENDER ------------------ */
-function renderMenu() {
-    if (!currentMenuData) return;
+function renderMenu(json) {
+    const data = json?.menu || json || currentMenuData;
+    // --- Scroll position capture ---
+    const previewEl = document.getElementById("menuPreview");
+    const prevScroll = previewEl ? previewEl.scrollTop : 0;
+    const controlsEl = document.querySelector(".controls-panel");
+    const prevControlsScroll = controlsEl ? controlsEl.scrollTop : 0;
 
-    let { categories, itemsByCategory } = currentMenuData;
+    if (!data) return;
+
+    let { categories, itemsByCategory } = data;
 
     let layout = document.getElementById("layoutType").value;
     let tabsPos = document.querySelector("input[name=tabsPosition]:checked").value;
     let align = document.querySelector("input[name=tabAlign]:checked").value;
 
     let activeCats = categories
-    .filter(c => !excludedCategories.includes(c.name))
+    .filter(c => !excludedCategories.includes(c.id))
     .filter(c => c.name.toLowerCase().includes(categorySearchQuery.toLowerCase()));
 
     if (!activeCategoryId) activeCategoryId = activeCats[0]?.id;
+
+    let allCats = categories.filter(c => !excludedCategories.includes(c.id));
 
     let showSearch = document.getElementById("showCategorySearch")?.checked;
     let showDropdown = document.getElementById("showCategoryDropdown")?.checked;
@@ -620,64 +799,108 @@ function renderMenu() {
     let html = `<div class="menu-layout tabs-${tabsPos}">`;
 
     // Build toolbar separately so it does NOT affect tab visibility/layout
-let toolbar = `<div class="category-toolbar">`;
+    let toolbar = `<div class="category-toolbar">`;
 
-// search FIRST
-if (showSearch) {
-    toolbar += `
-        <input 
-            type="text" 
-            id="categorySearchInput"
-            class="category-search" 
-            placeholder="Search categories..."
-            value="${categorySearchQuery}"
-            oninput="handleCategorySearch(this.value)"
-        />
-    `;
-}
+    // search FIRST
+    if (showSearch) {
+        toolbar += `
+            <input 
+                type="text" 
+                id="categorySearchInput"
+                class="category-search" 
+                placeholder="Search categories..."
+                value="${categorySearchQuery.replace(/"/g, '&quot;')}"
+                oninput="window.__spotOnCategorySearch(this.value)"
+            />
+        `;
+    }
 
-// dropdown SECOND
-if (showDropdown) {
-    toolbar += `
-        <select class="category-select" onchange="selectCategory(this.value)">
-            ${activeCats.map(c => `
-                <option value="${c.id}" ${c.id === activeCategoryId ? "selected" : ""}>
-                    ${c.name}
-                </option>
-            `).join("")}
-        </select>
-    `;
-}
+    // dropdown SECOND
+    if (showDropdown) {
+        toolbar += `
+            <select class="category-select" onchange="selectCategory(this.value)">
+                ${allCats.map(c => `
+                    <option value="${c.id}" ${c.id === activeCategoryId ? "selected" : ""}>
+                        ${c.name}
+                    </option>
+                `).join("")}
+            </select>
+        `;
+    }
 
-toolbar += `</div>`;
+    toolbar += `</div>`;
+
+    // LEFT SIDE (tabs + toolbar)
+    html += `<div class="menu-tabs-area">`;
 
     html += toolbar;
 
-  // Categories container hidden when dropdown is enabled
-if (!showDropdown) {
-    html += `<div class="categories-container align-${align}">`;
+    // Categories container hidden when dropdown is enabled
+    if (!showDropdown) {
+        html += `<div class="categories-container align-${align}">`;
 
-    activeCats.forEach(c=>{
-        html += `<div class="category-link ${c.id===activeCategoryId?'active':''}" onclick="selectCategory('${c.id}')">${c.name}</div>`;
-    });
+        activeCats.forEach(c=>{
+            html += `<div class="category-link ${c.id===activeCategoryId?'active':''}" onclick="selectCategory('${c.id}')">${c.name}</div>`;
+        });
+
+        html += `</div>`;
+    }
 
     html += `</div>`;
-}
-    html += `</div>
-        <div class="menu-root layout-${layout}" id="menuRoot"></div>
-    </div>`;
 
-    document.getElementById("menuPreview").innerHTML = html;
+    // RIGHT SIDE (menu items)
+    html += `<div class="menu-root layout-${layout}" id="menuRoot"></div>`;
+
+    html += `</div>`;
+
+    // --- STABLE RENDER (NO FULL REBUILD / NO FLICKER) ---
+    const preview = document.getElementById("menuPreview");
+    if (!preview) return;
+
+    // Create or reuse stable containers (tabs + root)
+    let layoutRoot = document.getElementById("menuLayoutRoot");
+    if (!layoutRoot) {
+        preview.innerHTML = `<div id="menuLayoutRoot"></div>`;
+        layoutRoot = document.getElementById("menuLayoutRoot");
+    }
+
+    // Parse generated layout HTML without destroying DOM state
+    const temp = document.createElement("div");
+    temp.innerHTML = html;
+
+    const newLayout = temp.querySelector(".menu-layout");
+    if (!newLayout) return;
+
+    const existingLayout = layoutRoot.querySelector(".menu-layout");
+
+    if (!existingLayout) {
+        layoutRoot.appendChild(newLayout);
+    } else {
+        // Update only children instead of replacing root (prevents flicker)
+        existingLayout.replaceWith(newLayout);
+    }
     
-    displayItems(activeCategoryId);
+    requestAnimationFrame(() => displayItems(activeCategoryId));
+    if (document.activeElement && document.activeElement.tagName === "SELECT") {
+        document.activeElement.blur();
+    }
 
     applyStyles();
+    // --- Restore scroll position after rendering ---
+    setTimeout(() => {
+        if (previewEl) previewEl.scrollTop = prevScroll;
+        if (controlsEl) controlsEl.scrollTop = prevControlsScroll;
+    }, 0);
 }
 
 /* ------------------ CATEGORY ------------------ */
 function selectCategory(cid){
+    if (activeCategoryId === cid) return;
     activeCategoryId = cid;
-    renderMenu();
+
+    requestAnimationFrame(() => {
+        renderMenu();
+    });
 }
 
 function handleCategorySearch(value) {
@@ -686,7 +909,7 @@ function handleCategorySearch(value) {
     if (!currentMenuData) return;
 
     let visibleCats = currentMenuData.categories
-        .filter(c => !excludedCategories.includes(c.name))
+        .filter(c => !excludedCategories.includes(c.id))
         .filter(c => c.name.toLowerCase().includes(categorySearchQuery.toLowerCase()));
 
     // If current active category disappears, reset it
@@ -694,7 +917,20 @@ function handleCategorySearch(value) {
         activeCategoryId = visibleCats[0]?.id || null;
     }
 
+    const categorySelect = document.getElementById("category-select");
+    if (categorySelect) categorySelect.value = activeCategoryId;
+
     renderMenu();
+
+    // Restore focus to search input after rendering
+    setTimeout(() => {
+        const searchInput = document.getElementById("categorySearchInput");
+        if (searchInput) {
+            searchInput.focus();
+            // Set cursor to end of input
+            searchInput.setSelectionRange(value.length, value.length);
+        }
+    }, 0);
 }
 
 /* ------------------ ITEMS ------------------ */
@@ -704,19 +940,47 @@ function displayItems(cid){
 
     let showImages = document.getElementById("showImages").checked;
     let showPrices = document.getElementById("showPrices").checked;
+    let layout = document.getElementById("layoutType").value;
 
     root.innerHTML = "";
 
     (itemsByCategory[cid] || []).forEach(item=>{
-        root.innerHTML += `
-        <div class="list-item">
-            ${showImages && item.imageUrl ? `<div class="item-thumbnail-wrapper"><img class="list-item-image" src="${item.imageUrl}"></div>`:""}
-            <div class="item-content">
-                <div class="list-item-name">${item.name}</div>
-                <div class="list-item-description">${item.description}</div>
-                ${showPrices ? `<div class="list-item-price">$${item.price}</div>`:""}
-            </div>
-        </div>`;
+        const showModifiers = document.getElementById("showModifiers")?.checked;
+        const hasModifiers = showModifiers ? 'has-modifiers' : 'no-modifiers';
+        const modifierClick = showModifiers ? `onclick="openModifierModal('${item.id}')"` : "";
+
+        // Handle different layout structures
+        if (layout === 'list-image-left' || layout === 'list-image-right') {
+            // List layouts need special structure
+            root.innerHTML += `
+            <div class="list-item ${hasModifiers}" ${modifierClick}>
+                ${showImages && item.imageUrl ? `
+                    <div class="item-thumbnail-wrapper">
+                        <img class="list-item-image" src="${item.imageUrl}">
+                    </div>
+                ` : ""}
+                <div class="item-content">
+                    <div class="list-item-name">${item.name}</div>
+                    <div class="list-item-description">${item.description}</div>
+                    ${showPrices ? `<div class="list-item-price">$${item.price}</div>` : ""}
+                </div>
+            </div>`;
+        } else {
+            // Grid layouts (classic, hero, compact, split)
+            root.innerHTML += `
+            <div class="list-item ${hasModifiers}" ${modifierClick}>
+                ${showImages && item.imageUrl ? `
+                    <div class="item-thumbnail-wrapper">
+                        <img class="list-item-image" src="${item.imageUrl}">
+                    </div>
+                ` : ""}
+                <div class="item-content">
+                    <div class="list-item-name">${item.name}</div>
+                    <div class="list-item-description">${item.description}</div>
+                    ${showPrices ? `<div class="list-item-price">$${item.price}</div>` : ""}
+                </div>
+            </div>`;
+        }
     });
 }
 
@@ -736,6 +1000,65 @@ function applyStyles() {
     loadFont(priceFont);
 
     const align = document.querySelector("input[name=tabAlign]:checked").value;
+
+    // --- Modal style variables ---
+    const inheritModal = document.getElementById("inheritCardStyle")?.checked;
+
+    const modalBg = inheritModal
+        ? (document.getElementById("cardBgColor")?.value || "#111315")
+        : (document.getElementById("modalBgColor")?.value || "#1a1d21");
+
+    const modalText = inheritModal
+        ? (document.getElementById("cardTitleColor")?.value || "#f1f5f9")
+        : (document.getElementById("modalTextColor")?.value || "#f1f5f9");
+
+    const modalBorder = inheritModal
+        ? (document.getElementById("cardBorderWidth")?.value || 1) + "px solid " + (document.getElementById("cardBorderColor")?.value || "#2a2e35")
+        : "1px solid " + (document.getElementById("cardBorderColor")?.value || "#2a2e35");
+
+    const modalRadius = inheritModal
+        ? `
+        ${(document.getElementById("cardRadiusTL")?.value || 16)}px
+        ${(document.getElementById("cardRadiusTR")?.value || 16)}px
+        ${(document.getElementById("cardRadiusBR")?.value || 16)}px
+        ${(document.getElementById("cardRadiusBL")?.value || 16)}px`
+        : `
+        ${(document.getElementById("modalRadiusTL")?.value || 24)}px
+        ${(document.getElementById("modalRadiusTR")?.value || 24)}px
+        ${(document.getElementById("modalRadiusBR")?.value || 24)}px
+        ${(document.getElementById("modalRadiusBL")?.value || 24)}px`;
+
+    const modalAccentColor = inheritModal
+        ? (document.getElementById("priceTextColor")?.value || "#38bdf8")
+        : (document.getElementById("modalAccentColor")?.value || document.getElementById("activeTabColor")?.value || "#3b82f6");
+
+    const modalSeparatorColor = inheritModal
+        ? (document.getElementById("cardBorderColor")?.value || "#2a2e35")
+        : (document.getElementById("modalSeparatorColor")?.value || "#2a2e35");
+
+    const modalTitleFont = inheritModal
+        ? (document.getElementById("titleFontFamily")?.value || "Inter")
+        : (document.getElementById("modalTitleFont")?.value || "Inter");
+
+    const modalModifierFont = inheritModal
+        ? (document.getElementById("descFontFamily")?.value || "Inter")
+        : (document.getElementById("modalModifierFont")?.value || "Inter");
+
+    const modalTitleSize = inheritModal
+        ? (document.getElementById("titleFontSize")?.value || 16)
+        : (document.getElementById("modalTitleSize")?.value || 18);
+
+    const modalTitleWeight = inheritModal
+        ? (document.getElementById("titleFontWeight")?.value || 600)
+        : (document.getElementById("modalTitleWeight")?.value || 600);
+
+    const modalModifierSize = inheritModal
+        ? (document.getElementById("descFontSize")?.value || 12)
+        : (document.getElementById("modalModifierSize")?.value || 13);
+
+    const modalModifierWeight = inheritModal
+        ? (document.getElementById("descFontWeight")?.value || 400)
+        : (document.getElementById("modalModifierWeight")?.value || 400);
 
     let style = document.getElementById("dynamicStyles");
     if (!style) {
@@ -813,7 +1136,86 @@ function applyStyles() {
     font-size: ${document.getElementById("priceFontSize")?.value}px;
     font-weight: ${document.getElementById("priceFontWeight")?.value};
 }
+/*
+ ---------- LEFT/RIGHT TAB LAYOUT FIX ----------
+*/
+.menu-layout.tabs-left,
+.menu-layout.tabs-right {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+}
+
+.menu-layout.tabs-left .menu-tabs-area,
+.menu-layout.tabs-right .menu-tabs-area {
+    width: 220px;
+    flex-shrink: 0;
+}
+
+.menu-layout.tabs-left .menu-root,
+.menu-layout.tabs-right .menu-root {
+    flex: 1;
+    min-width: 0;
+}
+/* ---------- MODAL STYLING ---------- */
+#modifierModalContent {
+    background: ${modalBg};
+    color: ${modalText};
+    border: ${modalBorder};
+    border-radius: ${modalRadius};
+        font-family: "${modalModifierFont}", sans-serif;
+    }
+
+    #modifierModalContent .modifier-modal-header h3 {
+        color: ${modalText};
+        font-family: "${modalTitleFont}", sans-serif;
+        font-size: ${modalTitleSize}px;
+        font-weight: ${modalTitleWeight};
+}
+
+#modifierModalContent .modal-close:hover {
+    color: ${modalText};
+    opacity: 0.8;
+}
+
+.modifier-group-name {
+    font-size: ${modalTitleSize}px;
+    font-weight: ${modalTitleWeight};
+    color: ${modalText};
+}
+
+.modifier-option span {
+    color: ${modalText};
+        font-family: "${modalModifierFont}", sans-serif;
+        font-size: ${modalModifierSize}px;
+        font-weight: ${modalModifierWeight};
+    }
+
+    .modifier-option span:last-child,
+    .modifier-limits {
+        color: ${modalAccentColor};
+        opacity: 0.95;
+        font-family: "${modalModifierFont}", sans-serif;
+        font-size: ${modalModifierSize}px;
+        font-weight: ${modalModifierWeight};
+/* Modal separator lines dynamic */
+.modifier-group {
+    border-bottom: 1px solid ${modalSeparatorColor};
+}
+.modifier-group:last-child {
+    border-bottom: none;
+}
 `;
+
+    // Modal style update (NO full re-render to prevent state reset)
+    const modal = document.getElementById("modifierModal");
+    if (modal && modal.classList.contains("active")) {
+        const content = document.getElementById("modifierModalContent");
+        if (content) {
+            // only force style refresh, keep DOM intact
+            content.style.transform = "translateZ(0)";
+        }
+    }
 }
 
 /* ------------------ CONTROLS ------------------ */
@@ -831,6 +1233,7 @@ function initControls() {
 
     document.getElementById("showImages").addEventListener("change", renderMenu);
     document.getElementById("showPrices").addEventListener("change", renderMenu);
+    document.getElementById("showModifiers").addEventListener("change", renderMenu);
 
     // --- Independent toggles for category search/dropdown ---
     const searchToggle = document.getElementById("showCategorySearch");
@@ -860,7 +1263,9 @@ function initControls() {
     "tabFontFamily","tabFontSize","tabFontWeight",
     "titleFontFamily","titleFontSize","titleFontWeight",
     "descFontFamily","descFontSize","descFontWeight",
-    "priceFontFamily","priceFontSize","priceFontWeight"
+    "priceFontFamily","priceFontSize","priceFontWeight",
+    "modalTitleFont","modalTitleSize","modalTitleWeight",
+    "modalModifierFont","modalModifierSize","modalModifierWeight"
 ].forEach(id => {
     const el = document.getElementById(id);
     if (!el) return;
@@ -868,6 +1273,21 @@ function initControls() {
     el.addEventListener("input", applyStyles);
     el.addEventListener("change", applyStyles);
 });
+
+    // --- Modifiers modal inherit toggle ---
+    const inherit = document.getElementById("inheritCardStyle");
+    if (inherit) {
+        const toggle = () => {
+            const section = document.getElementById("customModalStyles");
+            if (!section) return;
+
+            section.style.display = inherit.checked ? "none" : "block";
+            applyStyles();
+        };
+
+        inherit.addEventListener("change", toggle);
+        toggle();
+    }
 }
 
 function fixDatalistDropdowns() {
@@ -926,6 +1346,11 @@ function fixDatalistDropdowns() {
 /* ------------------ EMBED CODE GENERATION ------------------ */
 function generateEmbedCode() {
     const config = {
+        source: "SpotOnMenuEditor",
+        version: "2.0.0",
+        generatedBy: "Leo Pozos",
+        repository: "https://github.com/Tato-Pozos/SO_Express_JSON_Menu",
+        generatedAt: new Date().toISOString(),
         jsonUrl: document.getElementById("jsonUrl")?.value || "",
         layoutType: document.getElementById("layoutType")?.value,
         tabsPosition: document.querySelector("input[name=tabsPosition]:checked")?.value,
@@ -934,14 +1359,61 @@ function generateEmbedCode() {
         showPrices: document.getElementById("showPrices")?.checked,
         showCategorySearch: document.getElementById("showCategorySearch")?.checked,
         showCategoryDropdown: document.getElementById("showCategoryDropdown")?.checked,
-        excludedCategories: excludedCategories || []
-    };
-
-    const styles = {
-        cardBgColor: document.getElementById("cardBgColor")?.value,
-        cardTitleColor: document.getElementById("cardTitleColor")?.value,
-        descTextColor: document.getElementById("descTextColor")?.value,
-        priceTextColor: document.getElementById("priceTextColor")?.value
+        showModifiers: document.getElementById("showModifiers")?.checked,
+        excludedCategories: excludedCategories || [],
+        styles: {
+            cardBgColor: document.getElementById("cardBgColor")?.value,
+            cardBorderColor: document.getElementById("cardBorderColor")?.value,
+            cardBorderWidth: document.getElementById("cardBorderWidth")?.value,
+            cardRadiusTL: document.getElementById("cardRadiusTL")?.value,
+            cardRadiusTR: document.getElementById("cardRadiusTR")?.value,
+            cardRadiusBR: document.getElementById("cardRadiusBR")?.value,
+            cardRadiusBL: document.getElementById("cardRadiusBL")?.value,
+            cardPaddingTop: document.getElementById("cardPaddingTop")?.value,
+            cardPaddingRight: document.getElementById("cardPaddingRight")?.value,
+            cardPaddingBottom: document.getElementById("cardPaddingBottom")?.value,
+            cardPaddingLeft: document.getElementById("cardPaddingLeft")?.value,
+            cardTitleColor: document.getElementById("cardTitleColor")?.value,
+            descTextColor: document.getElementById("descTextColor")?.value,
+            priceTextColor: document.getElementById("priceTextColor")?.value,
+            activeTabColor: document.getElementById("activeTabColor")?.value,
+            defaultTabColor: document.getElementById("defaultTabColor")?.value,
+            defaultTabTextColor: document.getElementById("defaultTabTextColor")?.value,
+            activeTabTextColor: document.getElementById("activeTabTextColor")?.value,
+            tabBorderColor: document.getElementById("tabBorderColor")?.value,
+            tabBorderWidth: document.getElementById("tabBorderWidth")?.value,
+            tabRadiusTL: document.getElementById("tabRadiusTL")?.value || 40,
+            tabRadiusTR: document.getElementById("tabRadiusTR")?.value || 40,
+            tabRadiusBR: document.getElementById("tabRadiusBR")?.value || 40,
+            tabRadiusBL: document.getElementById("tabRadiusBL")?.value || 40,
+            tabFontFamily: document.getElementById("tabFontFamily")?.value,
+            tabFontSize: document.getElementById("tabFontSize")?.value,
+            tabFontWeight: document.getElementById("tabFontWeight")?.value,
+            titleFontFamily: document.getElementById("titleFontFamily")?.value,
+            titleFontSize: document.getElementById("titleFontSize")?.value,
+            titleFontWeight: document.getElementById("titleFontWeight")?.value,
+            descFontFamily: document.getElementById("descFontFamily")?.value,
+            descFontSize: document.getElementById("descFontSize")?.value,
+            descFontWeight: document.getElementById("descFontWeight")?.value,
+            priceFontFamily: document.getElementById("priceFontFamily")?.value,
+            priceFontSize: document.getElementById("priceFontSize")?.value,
+            priceFontWeight: document.getElementById("priceFontWeight")?.value,
+            googleFonts: (() => {
+                const fonts = new Set();
+                ['tabFontFamily', 'titleFontFamily', 'descFontFamily', 'priceFontFamily', 'modalTitleFont', 'modalModifierFont'].forEach(id => {
+                    const val = document.getElementById(id)?.value;
+                    if (val && val !== 'inherit') fonts.add(val);
+                });
+                return Array.from(fonts);
+            })(),
+            modalBgColor: document.getElementById("modalBgColor")?.value,
+            modalTextColor: document.getElementById("modalTextColor")?.value,
+            modalAccentColor: document.getElementById("modalAccentColor")?.value,
+            modalBorderRadius: document.getElementById("modalBorderRadius")?.value,
+            modalSeparatorColor: document.getElementById("modalSeparatorColor")?.value,
+            modalTitleFont: document.getElementById("modalTitleFont")?.value,
+            modalTextFont: document.getElementById("modalModifierFont")?.value
+        }
     };
 
     const embedCode = `
@@ -949,25 +1421,589 @@ function generateEmbedCode() {
 <div id="spoton-menu-root"></div>
 
 <script>
-window.SpotOnMenuConfig = ${JSON.stringify(config, null, 2)};
-window.SpotOnMenuStyles = ${JSON.stringify(styles, null, 2)};
-<\/script>
+    /*  SpotOn Menu Editor Author: Leo Pozos GitHub: https://github.com/Tato-Pozos  */
+(function() {
+const config = ${JSON.stringify(config, null, 2)};
 
-<script src="https://YOUR-CDN-OR-HOSTED-SCRIPT/menu-embed.js"><\/script>
+if (config.styles.googleFonts && config.styles.googleFonts.length) {
+    config.styles.googleFonts.forEach(font => {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = \`https://fonts.googleapis.com/css2?family=\${font.replace(/ /g, "+")}:wght@300;400;500;600;700&display=swap\`;
+        document.head.appendChild(link);
+    });
+}
+
+if (!config || !config.jsonUrl) {
+    console.error("SpotOn Menu: Missing config");
+    return;
+}
+
+let menuData = null;
+let itemsMap = new Map();
+let activeCategoryId = null;
+
+// Parse SpotOn JSON into categories and items
+function parseJSON(raw) {
+    const catNameMap = new Map();
+    
+    if (raw.menu?.categories && Array.isArray(raw.menu.categories)) {
+        raw.menu.categories.forEach(cat => {
+            catNameMap.set(cat.id, cat.name);
+        });
+    }
+    
+    const categories = [];
+    const itemsByCategory = {};
+    const itemsFull = new Map();
+    
+    // First pass: collect all category ids from items
+    const allCatIds = new Set();
+    
+    if (raw.items && Array.isArray(raw.items)) {
+        raw.items.forEach(item => {
+            if (item.category_ids && Array.isArray(item.category_ids)) {
+                item.category_ids.forEach(catId => {
+                    allCatIds.add(catId);
+                });
+            } else if (item.category_id) {
+                allCatIds.add(item.category_id);
+            }
+        });
+    }
+    
+    // Create categories for all catIds, with names from map or default
+    allCatIds.forEach(catId => {
+        if (!config.excludedCategories.includes(catId)) {
+            categories.push({
+                id: catId,
+                name: catNameMap.get(catId) || "Category " + catId
+            });
+            itemsByCategory[catId] = [];
+        }
+    });
+    
+    // Then add items
+    if (raw.items && Array.isArray(raw.items)) {
+        raw.items.forEach(item => {
+            if (item.category_ids && Array.isArray(item.category_ids)) {
+                item.category_ids.forEach(catId => {
+                    if (!config.excludedCategories.includes(catId) && itemsByCategory[catId]) {
+                        const parsed = {
+                            id: item.id,
+                            name: item.name,
+                            description: item.description || "",
+                            price: ((item.price?.amount || item.price || 0) / 100).toFixed(2),
+                            imageUrl: item.image_url || item.photos?.[0]?.url,
+                            modifier_groups: item.modifier_groups || item.modifiers || []
+                        };
+                        
+                        itemsFull.set(item.id, parsed);
+                        itemsByCategory[catId].push(parsed);
+                    }
+                });
+            } else if (item.category_id) {
+                const catId = item.category_id;
+                if (!config.excludedCategories.includes(catId) && itemsByCategory[catId]) {
+                    const parsed = {
+                        id: item.id,
+                        name: item.name,
+                        description: item.description || "",
+                        price: ((item.price?.amount || item.price || 0) / 100).toFixed(2),
+                        imageUrl: item.image_url || item.photos?.[0]?.url,
+                        modifier_groups: item.modifier_groups || item.modifiers || []
+                    };
+                    
+                    itemsFull.set(item.id, parsed);
+                    itemsByCategory[catId].push(parsed);
+                }
+            }
+        });
+    }
+    
+    return { categories, itemsByCategory, itemsFull };
+}
+
+// Apply dynamic styles
+function applyStyles() {
+    const s = config.styles;
+    const styleId = "spoton-dynamic-styles";
+    let style = document.getElementById(styleId);
+    
+    if (!style) {
+        style = document.createElement("style");
+        style.id = styleId;
+        document.head.appendChild(style);
+    }
+    
+    style.textContent = \`
+        #spoton-menu-root * { box-sizing: border-box; }
+        .menu-layout { display: flex; gap: 24px; }
+        .menu-layout.tabs-top { flex-direction: column; }
+        .menu-layout.tabs-bottom { flex-direction: column-reverse; }
+        .menu-layout.tabs-left { flex-direction: row; }
+        .menu-layout.tabs-right { flex-direction: row-reverse; }
+        
+        .category-toolbar { margin-bottom: 16px; }
+        .category-search { 
+            padding: 8px 12px; 
+            border: 1px solid #ccc; 
+            border-radius: 4px; 
+            width: 100%; 
+            max-width: 200px; 
+            margin-right: 10px; 
+        }
+        .category-select { 
+            padding: 8px 12px; 
+            border: 1px solid #ccc; 
+            border-radius: 4px; 
+        }
+        
+        .categories-container { display: flex; flex-wrap: wrap; gap: 10px; }
+        .tabs-left .categories-container, .tabs-right .categories-container { 
+            flex-direction: column; min-width: 150px; max-width: 200px; 
+        }
+        .align-center { justify-content: center; }
+        .align-left { justify-content: flex-start; }
+        .align-right { justify-content: flex-end; }
+        
+        .category-link {
+            padding: 8px 14px;
+            background: \${s.defaultTabColor};
+            color: \${s.defaultTabTextColor};
+            border: \${s.tabBorderWidth}px solid \${s.tabBorderColor};
+            border-radius: \${s.tabRadiusTL}px \${s.tabRadiusTR}px \${s.tabRadiusBR}px \${s.tabRadiusBL}px;
+            font-family: "\${s.tabFontFamily}", sans-serif;
+            font-size: \${s.tabFontSize}px;
+            font-weight: \${s.tabFontWeight};
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .category-link.active {
+            background: \${s.activeTabColor};
+            color: \${s.activeTabTextColor};
+            border-color: \${s.activeTabColor};
+        }
+        
+        .menu-root { flex: 1; }
+        .layout-classic-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 24px; }
+        .layout-hero-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 28px; }
+        .layout-compact-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 16px; }
+        .layout-split-view { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+        .layout-list-image-left, .layout-list-image-right { display: flex; flex-direction: column; gap: 20px; }
+        
+        .item {
+            background: \${s.cardBgColor};
+            border: \${s.cardBorderWidth}px solid \${s.cardBorderColor};
+            border-radius: \${s.cardRadiusTL}px \${s.cardRadiusTR}px \${s.cardRadiusBR}px \${s.cardRadiusBL}px;
+            overflow: hidden;
+            transition: transform 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+        .item.clickable { cursor: pointer; }
+        .item.clickable:hover { transform: translateY(-2px); }
+        
+        .layout-list-image-left .item,
+        .layout-list-image-right .item {
+            flex-direction: row;
+            align-items: stretch;
+        }
+        .layout-list-image-right .item { flex-direction: row-reverse; }
+        
+        .item-img-wrapper {
+            width: 100%;
+            overflow: hidden;
+        }
+        .layout-list-image-left .item-img-wrapper,
+        .layout-list-image-right .item-img-wrapper {
+            width: 120px;
+            height: 120px;
+            flex-shrink: 0;
+        }
+        .item-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .item-content {
+            padding: \${s.cardPaddingTop}px \${s.cardPaddingRight}px \${s.cardPaddingBottom}px \${s.cardPaddingLeft}px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .item-name {
+            font-family: "\${s.titleFontFamily}", sans-serif;
+            font-size: \${s.titleFontSize}px;
+            font-weight: \${s.titleFontWeight};
+            color: \${s.cardTitleColor};
+            margin-bottom: 6px;
+        }
+        .item-desc {
+            font-family: "\${s.descFontFamily}", sans-serif;
+            font-size: \${s.descFontSize}px;
+            font-weight: \${s.descFontWeight};
+            color: \${s.descTextColor};
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+        .item-price {
+            font-family: "\${s.priceFontFamily}", sans-serif;
+            font-size: \${s.priceFontSize}px;
+            font-weight: \${s.priceFontWeight};
+            color: \${s.priceTextColor};
+            margin-top: auto;
+        }
+        
+        .spoton-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 999999;
+            align-items: center;
+            justify-content: center;
+        }
+        .spoton-modal.active { display: flex; }
+        .spoton-modal-content {
+            background: \${s.modalBgColor || s.cardBgColor};
+            color: \${s.modalTextColor || s.cardTitleColor};
+            padding: 24px;
+            border-radius: \${s.modalBorderRadius || s.cardRadiusTL}px;
+            width: 90%;
+            max-width: 420px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        .spoton-modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: \${s.modalTextColor || s.cardTitleColor};
+            padding: 0;
+            width: auto;
+            height: auto;
+            margin: 0;
+        }
+        .spoton-modal-header {
+            font-family: "\${s.modalTitleFont || s.titleFontFamily}", sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            padding-right: 40px; /* Space for close button */
+        }
+        .spoton-modifier-group {
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid \${s.modalSeparatorColor || "#2a2e35"};
+        }
+        .spoton-modifier-group:last-child { border-bottom: none; }
+        .spoton-modifier-group-name {
+            font-family: "\${s.modalTextFont || s.descFontFamily}", sans-serif;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: \${s.modalTextColor || s.cardTitleColor};
+        }
+        .spoton-modifier-option {
+            font-family: "\${s.modalTextFont || s.descFontFamily}", sans-serif;
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            font-size: 14px;
+        }
+        .spoton-modifier-option span:first-child {
+            color: \${s.modalTextColor || s.cardTitleColor};
+        }
+        .spoton-modifier-option span:last-child {
+            color: \${s.modalAccentColor || s.activeTabColor};
+            font-weight: 600;
+        }
+        .spoton-modifier-limits {
+            color: \${s.modalAccentColor || s.activeTabColor};
+            font-weight: 600;
+        }
+    \`;
+}
+
+// Render menu
+function render() {
+    const root = document.getElementById("spoton-menu-root");
+    if (!root || !menuData) return;
+    
+    const { categories, itemsByCategory } = menuData;
+    let filteredCats = categories.filter(c => !config.excludedCategories.includes(c.id));
+    
+    if (categorySearchQuery) {
+        filteredCats = filteredCats.filter(c => c.name.toLowerCase().includes(categorySearchQuery.toLowerCase()));
+    }
+    
+    if (!activeCategoryId && filteredCats.length) {
+        activeCategoryId = filteredCats[0].id;
+    }
+    
+    let allCats = categories.filter(c => !config.excludedCategories.includes(c.id));
+    
+    let layout = config.layoutType;
+    let tabsPos = config.tabsPosition;
+    let align = config.tabAlign;
+    
+    let showSearch = config.showCategorySearch;
+    let showDropdown = config.showCategoryDropdown;
+    
+    let html = \`<div class="menu-layout tabs-\${tabsPos}">\`;
+    
+    // Build toolbar separately so it does NOT affect tab visibility/layout
+    let toolbar = \`<div class="category-toolbar">\`;
+    
+    // search FIRST
+    if (showSearch) {
+        toolbar += \`
+            <input 
+                type="text" 
+                id="categorySearchInput"
+                class="category-search" 
+                placeholder="Search categories..."
+                value="${categorySearchQuery.replace(/"/g, '&quot;')}"
+                oninput="window.__spotOnCategorySearch(this.value)"
+            />
+        \`;
+    }
+    
+    // dropdown SECOND
+    if (showDropdown) {
+        toolbar += \`
+            <select class="category-select" onchange="window.__spotOnSelectCategory(this.value)">
+                \${allCats.map(c => \`
+                    <option value="\${encodeURIComponent(c.id)}" \${c.id === activeCategoryId ? "selected" : ""}>
+                        \${c.name}
+                    </option>
+                \`).join("")}
+            </select>
+        \`;
+    }
+    
+    toolbar += \`</div>\`;
+    
+    // LEFT SIDE (tabs + toolbar)
+    html += \`<div class="menu-tabs-area">\`;
+    
+    html += toolbar;
+    
+    // Categories container hidden when dropdown is enabled
+    if (!showDropdown) {
+        html += \`<div class="categories-container align-\${align}">\`;
+        
+        filteredCats.forEach(c=>{
+            html += \`<div class="category-link \${c.id===activeCategoryId?'active':''}" onclick="window.__spotOnSelectCategory(decodeURIComponent('\${encodeURIComponent(c.id)}'))">\${c.name}</div>\`;
+        });
+        
+        html += \`</div>\`;
+    }
+    
+    html += \`</div>\`;
+    
+    // RIGHT SIDE (menu items)
+    html += \`<div class="menu-root layout-\${layout}" id="menuRoot"></div>\`;
+    
+    html += \`</div>\`;
+    
+    // --- STABLE RENDER (NO FULL REBUILD / NO FLICKER) ---
+    const preview = document.getElementById("spoton-menu-root");
+    if (!preview) return;
+    
+    // Create or reuse stable containers (tabs + root)
+    let layoutRoot = document.getElementById("menuLayoutRoot");
+    if (!layoutRoot) {
+        preview.innerHTML = \`<div id="menuLayoutRoot"></div>\`;
+        layoutRoot = document.getElementById("menuLayoutRoot");
+    }
+    
+    // Parse generated layout HTML without destroying DOM state
+    const temp = document.createElement("div");
+    temp.innerHTML = html;
+    
+    const newLayout = temp.querySelector(".menu-layout");
+    if (!newLayout) return;
+    
+    const existingLayout = layoutRoot.querySelector(".menu-layout");
+    
+    if (!existingLayout) {
+        layoutRoot.appendChild(newLayout);
+    } else {
+        // Update only children instead of replacing root (prevents flicker)
+        existingLayout.replaceWith(newLayout);
+    }
+    
+    if (showSearch) {
+        const searchInput = document.getElementById("categorySearchInput");
+        if (searchInput) {
+            searchInput.value = categorySearchQuery.replace(/"/g, '&quot;');
+        }
+    }
+    
+    displayItems(activeCategoryId);
+}
+
+// Modal
+const modalHtml = \`
+    <div id="spoton-modal" class="spoton-modal" onclick="if(event.target.id==='spoton-modal') window.__spotOnCloseModal()">
+        <div class="spoton-modal-content">
+            <button class="spoton-modal-close" onclick="window.__spotOnCloseModal()">&times;</button>
+            <div class="spoton-modal-header" id="spoton-modal-title"></div>
+            <div id="spoton-modal-body"></div>
+        </div>
+    </div>
+\`;
+
+if (!document.getElementById("spoton-modal")) {
+    document.body.insertAdjacentHTML('beforeend', modalHtml);
+}
+
+function selectCategory(cid){
+    if (activeCategoryId === cid) return;
+    activeCategoryId = cid;
+    render();
+}
+
+let categorySearchQuery = "";
+
+function handleCategorySearch(value) {
+    categorySearchQuery = value;
+
+    if (!menuData) return;
+
+    let visibleCats = menuData.categories
+        .filter(c => !config.excludedCategories.includes(c.id))
+        .filter(c => c.name.toLowerCase().includes(categorySearchQuery.toLowerCase()));
+
+    // If current active category disappears, reset it
+    if (!visibleCats.find(c => c.id === activeCategoryId)) {
+        activeCategoryId = visibleCats[0]?.id || null;
+    }
+
+    render();
+
+    // Restore focus to search input after rendering
+    setTimeout(() => {
+        const searchInput = document.getElementById("categorySearchInput");
+        if (searchInput) {
+            searchInput.focus();
+            // Set cursor to end of input
+            searchInput.setSelectionRange(value.length, value.length);
+        }
+    }, 0);
+}
+
+function displayItems(cid){
+    let root = document.getElementById("menuRoot");
+    if (!root || !menuData) return;
+    
+    const items = menuData.itemsByCategory[cid] || [];
+    
+    let html = '';
+    
+    items.forEach(item => {
+        const hasModifiers = config.showModifiers && item.modifier_groups?.length;
+        const clickable = hasModifiers ? 'clickable' : '';
+        const onclick = hasModifiers ? \`onclick="window.__spotOnOpenModal(decodeURIComponent('\${encodeURIComponent(item.id)}'))"\` : '';
+        
+        html += \`<div class="item \${clickable}" \${onclick}>\`;
+        
+        if (config.showImages && item.imageUrl) {
+            html += \`<div class="item-img-wrapper"><img class="item-img" src="\${item.imageUrl}" alt="\${item.name}"></div>\`;
+        }
+        
+        html += '<div class="item-content">';
+        html += \`<div class="item-name">\${item.name}</div>\`;
+        html += \`<div class="item-desc">\${item.description}</div>\`;
+        if (config.showPrices) {
+            html += \`<div class="item-price">$\${item.price}</div>\`;
+        }
+        html += '</div>';
+        html += '</div>';
+    });
+    
+    root.innerHTML = html;
+}
+
+window.__spotOnSelectCategory = function(catId) {
+    activeCategoryId = decodeURIComponent(catId);
+    render();
+};
+
+window.__spotOnCategorySearch = function(value) {
+    handleCategorySearch(value);
+};
+
+window.__spotOnOpenModal = function(itemId) {
+    const item = itemsMap.get(decodeURIComponent(itemId));
+    if (!item) return;
+    
+    document.getElementById("spoton-modal-title").textContent = item.name;
+    
+    const body = document.getElementById("spoton-modal-body");
+    const modifiers = item.modifier_groups || [];
+    
+    if (!modifiers.length) {
+        body.innerHTML = '<div>No modifiers available</div>';
+    } else {
+        body.innerHTML = modifiers.map(group => \`
+            <div class="spoton-modifier-group">
+                <div class="spoton-modifier-group-name">\${group.name || "Options"}</div>
+                <div class="spoton-modifier-limits">\${group.min_select || 0} - \${group.max_select || "&infin;"} selected</div>
+                \${(group.options || []).map(opt => \`
+                    <div class="spoton-modifier-option">
+                        <span>\${opt.name}</span>
+                        <span>\${opt.price ? "$" + (opt.price / 100).toFixed(2) : ""}</span>
+                    </div>
+                \`).join('')}
+            </div>
+        \`).join('');
+    }
+    
+    document.getElementById("spoton-modal").classList.add("active");
+};
+
+window.__spotOnCloseModal = function() {
+    document.getElementById("spoton-modal").classList.remove("active");
+};
+
+// Initialize
+async function init() {
+    try {
+        const res = await fetch(config.jsonUrl);
+        const json = await res.json();
+        
+        const parsed = parseJSON(json);
+        menuData = parsed;
+        itemsMap = parsed.itemsFull;
+        
+        applyStyles();
+        render();
+    } catch (err) {
+        console.error("SpotOn Menu: Failed to load", err);
+        document.getElementById("spoton-menu-root").innerHTML = 
+            '<div style="padding:20px;color:#ef4444;">Failed to load menu. Please check the console.</div>';
+    }
+}
+
+init();
+})();
+<\/script>
 `;
 
     document.getElementById("embedCodeDisplay").textContent = embedCode.trim();
 }
-
-/* ------------------ INIT ------------------ */
-document.getElementById("loadUrlBtn").onclick = () =>
-    loadFromUrl(document.getElementById("jsonUrl").value);
-
-document.getElementById("showCodeBtn").addEventListener("click", () => {
-    generateEmbedCode();
-    document.getElementById("codeModal").classList.add("active");
-});
-
 
 function showCopySuccess() {
     const el = document.getElementById("copySuccessMsg");
@@ -978,17 +2014,180 @@ function showCopySuccess() {
     }, 2000);
 }
 
-document.getElementById("modalFooterCopyBtn").addEventListener("click", () => {
-    navigator.clipboard.writeText(document.getElementById("embedCodeDisplay").textContent);
-    showCopySuccess();
-});
-
-initControls();
-fixDatalistDropdowns();
+function closeModifierModal() {
+    currentModalItemId = null;
+    const modal = document.getElementById("modifierModal");
+    if (modal) modal.classList.remove("active");
+}
 
 function closeCodeModal() {
     document.getElementById("codeModal").classList.remove("active");
 }
+
+/* ------------------ INIT ------------------ */
+document.addEventListener("DOMContentLoaded", () => {
+    // Initialize controls
+    initControls();
+    fixDatalistDropdowns();
+    
+    // Load button
+    const loadBtn = document.getElementById("loadUrlBtn");
+    if (loadBtn) {
+        loadBtn.onclick = () => {
+            const url = document.getElementById("jsonUrl").value;
+            if (!url) {
+                alert("Please enter a menu JSON URL");
+                return;
+            }
+            loadFromUrl(url);
+        };
+    }
+    
+    // Show code button
+    const showCodeBtn = document.getElementById("showCodeBtn");
+    if (showCodeBtn) {
+        showCodeBtn.addEventListener("click", () => {
+            generateEmbedCode();
+            document.getElementById("codeModal").classList.add("active");
+        });
+    }
+    
+    // Copy button
+    const copyBtn = document.getElementById("modalFooterCopyBtn");
+    if (copyBtn) {
+        copyBtn.addEventListener("click", () => {
+            navigator.clipboard.writeText(document.getElementById("embedCodeDisplay").textContent);
+            showCopySuccess();
+        });
+    }
+    
+    // Modifier modal click outside to close
+    const modal = document.getElementById("modifierModal");
+    if (modal) {
+        modal.addEventListener("click", (e) => {
+            if (e.target === modal) {
+                closeModifierModal();
+            }
+        });
+    }
+    
+    // Prevent auto-loading
+    window.menuState = null;
+    currentMenuData = null;
+});
+
+// ------------------ MENU STATE MANAGEMENT & FETCH ------------------
+window.menuState = null;
+
+function setMenuState(newState) {
+  // 1. Save raw state
+  window.menuState = newState;
+
+  // 2. Transform it to expected structure
+  const parsed = parseSpotOnJSON(newState);
+
+  // 3. Sync legacy variables (fixes null crash)
+  currentMenuData = parsed;
+  currentItemsMap = parsed.itemsFull;
+  activeCategoryId = parsed.categories[0]?.id;
+
+  // 4. Render using existing system
+  renderMenu();
+}
+
+function updateMenuState(patch) {
+  // merge patch into state
+  const updated = {
+    ...window.menuState,
+    ...patch
+  };
+
+  // reuse full pipeline
+  setMenuState(updated);
+}
+
+
+</script>
+<script>
+// ------------------ MODIFIER MODAL FUNCTION ------------------
+function openModifierModal(itemId) {
+    currentModalItemId = itemId;
+    const item = currentItemsMap.get(itemId);
+    if (!item) return;
+
+    document.getElementById("modalItemName").innerText = item.name;
+
+    const body = document.getElementById("modifierModalBody");
+
+    const modifiers = item.modifier_groups || item.modifiers || [];
+
+    if (!modifiers.length) {
+        body.innerHTML = `<div class="no-modifiers">No modifiers available</div>`;
+    } else {
+        body.innerHTML = modifiers.map(group => `
+            <div class="modifier-group">
+                <div class="modifier-group-name">${group.name || "Options"}</div>
+                <div class="modifier-limits">${group.min_select || 0} - ${group.max_select || "&infin;"} selected</div>
+                ${(group.options || []).map(opt => `
+                    <div class="modifier-option">
+                        <span>${opt.name}</span>
+                        <span class="modifier-price">${opt.price ? `$${(opt.price/100).toFixed(2)}` : ""}</span>
+                    </div>
+                `).join("")}
+            </div>
+        `).join("");
+    }
+
+    document.getElementById("modifierModal").classList.add("active");
+    // Ensure modal reflects latest live styles immediately (no stale state when re-opening same item)
+    applyStyles();
+}
+
+// Global functions for preview compatibility
+window.__spotOnCategorySearch = handleCategorySearch;
+window.__spotOnSelectCategory = selectCategory;
+window.__spotOnOpenModal = openModifierModal;
+window.__spotOnCloseModal = closeModifierModal;
+
+/* ------------------ UI REACTIVITY BINDINGS ------------------ */
+function bindUIControls() {
+    const reRender = () => {
+        if (typeof renderMenu === 'function') {
+            renderMenu();
+        } else if (typeof renderMenuPreview === 'function') {
+            renderMenuPreview();
+        }
+    };
+
+    // Layout dropdown
+    const layoutType = document.getElementById('layoutType');
+    if (layoutType) layoutType.addEventListener('change', reRender);
+
+    // Tabs position
+    document.querySelectorAll('input[name="tabsPosition"]').forEach(el => {
+        el.addEventListener('change', reRender);
+    });
+
+    // Alignment
+    document.querySelectorAll('input[name="tabAlign"]').forEach(el => {
+        el.addEventListener('change', reRender);
+    });
+
+    // Toggles
+    [
+        'showImages',
+        'showPrices',
+        'showCategorySearch',
+        'showCategoryDropdown',
+        'showModifiers'
+    ].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener('change', reRender);
+    });
+}
+
+// attach once DOM is ready
+window.addEventListener('DOMContentLoaded', bindUIControls);
 </script>
 </body>
 </html>
