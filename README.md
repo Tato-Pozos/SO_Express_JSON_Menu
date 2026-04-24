@@ -16,6 +16,16 @@ It is designed as a lightweight, flexible system for menu configuration and depl
 
 ---
 
+## 👥 Who is this for
+
+- Designers creating menus for client websites
+- Teams working with SpotOn integrations
+- Developers embedding dynamic menu systems
+
+No advanced coding knowledge is required to use the editor.
+
+---
+
 ## ⚙️ How It Works
 
 ### Editor (Source of Truth)
@@ -26,6 +36,17 @@ It is designed as a lightweight, flexible system for menu configuration and depl
 ### Runtime (Embed)
 - The generated snippet is added to any website
 - Loads and renders the menu dynamically
+
+---
+
+## ⚡ Quick Use
+
+1. Open `Express_JSON_Menu.html`
+2. Build your menu visually
+3. Copy the generated embed code
+4. Paste it into your website
+
+Done.
 
 ---
 
