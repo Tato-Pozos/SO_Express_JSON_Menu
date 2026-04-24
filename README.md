@@ -1,41 +1,40 @@
 # SpotOn Menu Editor
 
-Embed-based JSON menu rendering system powered by a visual editor.
+A visual menu editor and JSON-based embed rendering system for dynamic restaurant menus.
 
 ---
 
 ## 🧠 Overview
 
-This project provides a complete workflow to:
+This project is the evolution of earlier menu integration tooling developed by Leo Pozos. It has since been extended into a full visual editor and embed generation system for dynamic menu rendering.
 
-1. Build menus visually using an editor
-2. Generate an embed snippet
-3. Render menus dynamically on any website
+It allows users to build, configure, and deploy menus without writing code.
 
-It is designed as a lightweight, flexible system for menu configuration and deployment.
+---
+
+## ⚙️ System Architecture
+
+The system is composed of two main layers:
+
+### 1. Editor Layer
+- `Express_JSON_Menu.html`
+- Visual interface for building and configuring menus
+- Generates structured JSON and embed output
+
+### 2. Runtime Layer
+- Generated embed code
+- Renders menus dynamically on any website
+- Ensures consistency between editor preview and production output
 
 ---
 
 ## 👥 Who is this for
 
-- Designers creating menus for client websites
-- Teams working with SpotOn integrations
-- Developers embedding dynamic menu systems
+- Designers building restaurant or product menus
+- Teams integrating dynamic menu systems into websites
+- Developers embedding structured menu configurations
 
 No advanced coding knowledge is required to use the editor.
-
----
-
-## ⚙️ How It Works
-
-### Editor (Source of Truth)
-- `Express_JSON_Menu.html`
-- Used to configure menu structure, layout, and behaviour
-- Generates the embed code
-
-### Runtime (Embed)
-- The generated snippet is added to any website
-- Loads and renders the menu dynamically
 
 ---
 
@@ -43,52 +42,29 @@ No advanced coding knowledge is required to use the editor.
 
 1. Open `Express_JSON_Menu.html`
 2. Build your menu visually
-3. Copy the generated embed code
-4. Paste it into your website
+3. Configure layout and settings
+4. Generate embed code
+5. Paste it into your website
 
 Done.
 
 ---
 
-## 🚀 Getting Started
-
-### 1. Open the Menu Editor
-
-Open the `Express_JSON_Menu.html` file in your browser.
-
----
-
-### 2. Configure Your Menu
-
-- Build your menu structure
-- Adjust layout and settings
-- Preview changes in real time
-
----
-
-### 3. Generate the Embed Code
-
-Use the editor to generate your embed snippet.
-
----
-
-### 4. Add the Embed to Your Site
-
-Paste the generated code into your website where the menu should appear.
-
----
-
-### 5. Done
-
-The menu will render dynamically based on your configuration.
-
----
-
 ## 📁 Project Structure
 
-- `Express_JSON_Menu.html` → Menu editor (main interface)
-- `test-embed.html` → Local testing for embed output
+- `Express_JSON_Menu.html` → Main visual editor
+- `test-embed.html` → Local testing environment
 - `README.md` → Documentation
+
+---
+
+## 🧠 Key Concept
+
+This system separates:
+- Menu creation (editor)
+- Menu rendering (embed runtime)
+
+This ensures consistent output between design-time configuration and live environments.
 
 ---
 
@@ -101,9 +77,9 @@ GitHub: https://github.com/Tato-Pozos
 
 ## ⚠️ Disclaimer
 
-This software was independently developed by Leo Pozos.
+This project was independently developed by Leo Pozos.
 
-It is designed for compatibility with SpotOn systems but is **not affiliated with, endorsed by, or an official product of SpotOn**.
+It is designed for compatibility with SpotOn systems **but is not affiliated with, endorsed by, or an official product of SpotOn**.
 
 ---
 
@@ -113,4 +89,4 @@ This project is source-available.
 
 You are free to use, copy, and modify this software for personal or internal business purposes.
 
-Commercial use, resale, or distribution as part of a paid product is not allowed without explicit permission.
+Commercial use, resale, or distribution as part of a paid product **is not allowed without explicit permission**.
